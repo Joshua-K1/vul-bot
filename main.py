@@ -22,3 +22,13 @@ def vul_check(query: str):
         "This is the prompt that will be added: " + prompt_string
 
     }
+
+@app.get("/info-check")
+def info_check(query: str):
+    event_logger.info("Information Check Called")
+    prompt_string = read_prompts("info-check")
+    return {
+        "This is the query string: " + query,
+        "This is the prompt that will be added: " + prompt_string
+
+    }

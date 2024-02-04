@@ -1,5 +1,5 @@
 {
 
 	"vulnerability-check": "Tell me about the vulnerabilities that area associated with the following package.",
-	"refactor-check": "Tell me about the vulnerabilities that area associated with the following package."
+	"info-check": "Provide me with further information about the following package"
 }

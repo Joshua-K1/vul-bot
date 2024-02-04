@@ -13,3 +13,5 @@ def read_prompts(prompt_type):
       event_logger.error(err)
       event_logger.error("Prompt file could not be found or is in an invalid format")
 
+      return ""
+
