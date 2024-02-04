@@ -13,7 +13,6 @@ def hello():
 # GET - Take in query string and search
 @app.get("/vulnerability-check")
 def vul_check(query: str):
-
     prompt_string = read_prompts("vulnerability-check")
     return {
         "This is the query string: " + query,
