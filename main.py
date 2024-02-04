@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from logger.logger import event_logger
 from helpers.prompts import read_prompts
 
 app = FastAPI()
@@ -6,6 +7,7 @@ app = FastAPI()
 # GET - API Root
 @app.get("/")
 def hello():
+    event_logger.info("API Root Called")
     return {
         "API Root"
     }
@@ -13,6 +15,7 @@ def hello():
 # GET - Take in query string and search
 @app.get("/vulnerability-check")
 def vul_check(query: str):
+    event_logger.info("Vulnerability Check Called")
     prompt_string = read_prompts("vulnerability-check")
     return {
         "This is the query string: " + query,
