@@ -1,5 +1,18 @@
 {
 
-	"vulnerability-check": "Tell me about the vulnerabilities that area associated with the following package.",
-	"info-check": "Provide me with further information about the following package"
+	"vulnerability-check": {
+		"system-prompt": "You are a cybersecurity engineer with a keen eye for detail and are carrying out a security audit.",
+		"user-prompt": "Tell me about the vulnerabilites that are associated with the following package."
+
+
+	}, 
+
+	"info-check": {
+		"system-prompt": "You are a cybersecurity engineer with a keen eye for detail and are carrying out a security audit",
+		"user-prompt": "Provide me with further information about the following package."
+
+
+	}
+
+
 }

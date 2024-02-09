@@ -16,19 +16,22 @@ def hello():
 @app.get("/vulnerability-check")
 def vul_check(query: str):
     event_logger.info("Vulnerability Check Called")
-    prompt_string = read_prompts("vulnerability-check")
+    prompt_dict = read_prompts("vulnerability-check")
+
     return {
         "This is the query string: " + query,
-        "This is the prompt that will be added: " + prompt_string
+        "System Prompt: " +  prompt_dict["system"],
+        "User Prompt: " +  prompt_dict["user"]
 
     }
 
 @app.get("/info-check")
 def info_check(query: str):
     event_logger.info("Information Check Called")
-    prompt_string = read_prompts("info-check")
+    prompt_dict = read_prompts("info-check")
     return {
         "This is the query string: " + query,
-        "This is the prompt that will be added: " + prompt_string
+        "System Prompt: " +  prompt_dict["system"],
+        "User Prompt: " +  prompt_dict["user"]
 
     }
