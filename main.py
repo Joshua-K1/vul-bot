@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from logger.logger import event_logger
 from helpers.prompts import read_prompts
+from helpers.open_ai import call_openai
 
 app = FastAPI()
 
@@ -17,11 +18,13 @@ def hello():
 def vul_check(query: str):
     event_logger.info("Vulnerability Check Called")
     prompt_dict = read_prompts("vulnerability-check")
+    response = call_openai(prompt_dict["system"], prompt_dict["user"])
 
     return {
         "This is the query string: " + query,
         "System Prompt: " +  prompt_dict["system"],
-        "User Prompt: " +  prompt_dict["user"]
+        "User Prompt: " +  prompt_dict["user"],
+        response
 
     }
 

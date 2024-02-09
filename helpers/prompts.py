@@ -1,5 +1,4 @@
 import json
-import os
 from logger.logger import event_logger
 
 def read_prompts(prompt_type):
@@ -7,7 +6,6 @@ def read_prompts(prompt_type):
     try: 
      with open('system_prompts/prompts.json', 'r', encoding='utf-8') as prompt_file:
         prompts = json.load(prompt_file)
-
         check_prompts = prompts[prompt_type]
         system_prompt = check_prompts["system-prompt"]
         user_prompt = check_prompts["user-prompt"]
