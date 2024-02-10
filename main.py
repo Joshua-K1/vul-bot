@@ -32,9 +32,10 @@ def info_check(query: str):
     event_logger.info("Information Check Called")
     prompt_dict = read_prompts("info-check")
     response = call_openai(prompt_dict["system"], prompt_dict["user"], query)
-    return {
-        "This is the query string: " + query,
-        "System Prompt: " +  prompt_dict["system"],
-        "User Prompt: " +  prompt_dict["user"],
-        response
-    }
+
+    if response is not None:
+        return {
+            "This is the query string: " + query,
+            "System Prompt: " +  prompt_dict["system"],
+            "User Prompt: " +  prompt_dict["user"],
+        }

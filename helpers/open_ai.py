@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from fastapi import HTTPException
 from openai import OpenAI, OpenAIError
 from logger.logger import event_logger
 
@@ -19,11 +20,12 @@ def call_openai(system_prompt, user_prompt, query):
     )
 
     return completion.choices[0].message.content
+
   except OpenAIError as err:
     event_logger.error(err)
-    return None
+    raise HTTPException(status_code=503, detail="OpenAI Server Error")
 
   except Exception as err:
     event_logger.error(err)
-    return None
+    raise HTTPException(status_code=503, detail="An unexpected error has occured")
 
