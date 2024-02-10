@@ -5,12 +5,14 @@ from openai import OpenAI, OpenAIError
 from logger.logger import event_logger
 
 def call_openai(system_prompt, user_prompt, query):
+  event_logger.info("Loading environment variables")
   load_dotenv()
   client = OpenAI(
     api_key = os.getenv('OPEN_AI_API_KEY')
   )
 
   try:
+    event_logger.info("Calling OpenAI")
     completion = client.chat.completions.create(
       model="gpt-3.5-turbo",
       messages=[
