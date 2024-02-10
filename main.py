@@ -13,20 +13,22 @@ def hello():
         "API Root"
     }
 
-# GET - Take in query string and search
+# GET - Take in query string and search for vulnerabilities
 @app.get("/vulnerability-check")
 def vul_check(query: str):
     event_logger.info("Vulnerability Check Called")
     prompt_dict = read_prompts("vulnerability-check")
     response = call_openai(prompt_dict["system"], prompt_dict["user"], query)
 
-    return {
-        "This is the query string: " + query,
-        "System Prompt: " +  prompt_dict["system"],
-        "User Prompt: " +  prompt_dict["user"],
-        response
-    }
+    if response is not None:
+        return {
+            "This is the query string: " + query,
+            "System Prompt: " +  prompt_dict["system"],
+            "User Prompt: " +  prompt_dict["user"],
+            response
+        }
 
+# GET - Take in query string and search for any relevant information
 @app.get("/info-check")
 def info_check(query: str):
     event_logger.info("Information Check Called")
