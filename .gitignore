@@ -2,3 +2,4 @@ __pycache__
 logs/
 .secret
 .env
+.DS_Store

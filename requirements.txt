@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+requests
+pytest
+openai
+python-dotenv
+azure-identity
+azure-keyvault-secrets
+starlette
