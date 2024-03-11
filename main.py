@@ -2,8 +2,12 @@ from fastapi import FastAPI
 from logger.logger import event_logger
 from helpers.prompts import read_prompts
 from helpers.open_ai import call_openai
+from middleware.auth import authenticate
 
 app = FastAPI()
+
+# Apply the authentication middleware to the app
+app.middleware('http')(authenticate)
 
 # GET - API Root
 @app.get("/")

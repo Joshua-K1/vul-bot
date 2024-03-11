@@ -1,4 +1,4 @@
-import os
+import helpers.config as config
 from dotenv import load_dotenv
 from fastapi import HTTPException
 from openai import OpenAI, OpenAIError
@@ -8,7 +8,7 @@ def call_openai(system_prompt, user_prompt, query):
   event_logger.info("Loading environment variables")
   load_dotenv()
   client = OpenAI(
-    api_key = os.getenv('OPEN_AI_API_KEY')
+    api_key = config.open_ai_api_key
   )
 
   try:
