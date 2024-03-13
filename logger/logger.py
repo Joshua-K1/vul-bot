@@ -27,6 +27,12 @@ logging_config = dict(
                              'filename': 'logs/batch.log',
                              'maxBytes': 52428800,
                              'backupCount': 7},
+        'request-logger': {'class': 'logging.handlers.RotatingFileHandler',
+                             'formatter': 'verbose',
+                             'level': logging.DEBUG,
+                             'filename': 'logs/requests.log',
+                             'maxBytes': 52428800,
+                             'backupCount': 7},
         'console': {
             'class': 'logging.StreamHandler',
             'level': 'DEBUG',
@@ -42,6 +48,10 @@ logging_config = dict(
         'batch_process_logger': {
             'handlers': ['batch-process-logger', 'console'],
             'level': logging.DEBUG
+        },
+        'request_logger': {
+            'handlers': ['request-logger', 'console'],
+            'level': logging.DEBUG
         }
     }
 )
@@ -53,3 +63,4 @@ except:
 
 event_logger = logging.getLogger('event_logger')
 batch_process_logger = logging.getLogger('batch_process_logger')
+request_logger = logging.getLogger('request_logger')

@@ -1,8 +1,17 @@
-from fastapi import FastAPI
-from logger.logger import event_logger
+from uuid import uuid1, UUID
+from fastapi import FastAPI, HTTPException
+from pydantic.fields import Field
+from logger.logger import event_logger, request_logger
 from helpers.prompts import read_prompts
 from helpers.open_ai import call_openai
 from middleware.auth import authenticate
+from pydantic import BaseModel
+
+# Define pydantic model and include unique id per request
+class OpenQuery(BaseModel):
+    prompt: str
+    request_id: UUID = Field(default_factory=uuid1)
+
 
 app = FastAPI()
 
@@ -17,31 +26,34 @@ def hello():
         "API Root"
     }
 
-# GET - Take in query string and search for vulnerabilities
-@app.get("/vulnerability-check")
-def vul_check(query: str):
-    event_logger.info("Vulnerability Check Called")
+# POST - Read in prompt and search for vulnerabilities
+@app.post("/vulnerability-check")
+async def create_vul_query(vul_query: OpenQuery):
+    # Read in prompts defined for vulnerability checks and make call to OpenAI
     prompt_dict = read_prompts("vulnerability-check")
-    response = call_openai(prompt_dict["system"], prompt_dict["user"], query)
+    response = call_openai(prompt_dict["system"], prompt_dict["user"], vul_query.prompt)
 
-    if response is not None:
-        return {
-            "This is the query string: " + query,
-            "System Prompt: " +  prompt_dict["system"],
-            "User Prompt: " +  prompt_dict["user"],
-            response
-        }
+    # If response is not successful, raise a 500 status code and log error in logs/requests.log
+    if not response["success"]:
+        error = response["error"]
+        request_logger.error(f"Request ID: {vul_query.request_id} Error: {error}")
+        raise HTTPException(status_code=500, detail=f"Internal Server Error. Request ID: {vul_query.request_id}")
+    else: 
+        
+        return response["data"]
 
-# GET - Take in query string and search for any relevant information
-@app.get("/info-check")
-def info_check(query: str):
-    event_logger.info("Information Check Called")
+# POST - Read in prompt string and search for any relevant information
+@app.post("/info-check")
+async def create_info_query(info_query: OpenQuery):
+    # Read in prompts defined for info check and make call to OpenAI
     prompt_dict = read_prompts("info-check")
-    response = call_openai(prompt_dict["system"], prompt_dict["user"], query)
+    response = call_openai(prompt_dict["system"], prompt_dict["user"], info_query.prompt)
 
-    if response is not None:
-        return {
-            "This is the query string: " + query,
-            "System Prompt: " +  prompt_dict["system"],
-            "User Prompt: " +  prompt_dict["user"],
-        }
+    # If response is not successful, raise a 500 status code and log error in logs/requests.log
+    if not response["success"]:
+        error = response["error"]
+        request_logger.error(f"Request ID: {info_query.request_id} Error: {error}")
+        raise HTTPException(status_code=500, detail=f"Internal Server Error. Request ID: {info_query.request_id}")
+    else: 
+        
+        return response["data"]
