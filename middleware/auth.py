@@ -1,10 +1,11 @@
 import helpers.config as config
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from starlette.requests import Request
 from starlette.responses import Response
 from logger.logger import event_logger
+
 
 async def authenticate(request: Request, call_next):
     x_api_consumer = request.headers.get('X-API-CONSUMER')
