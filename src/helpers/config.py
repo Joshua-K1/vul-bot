@@ -2,8 +2,8 @@ import os
 from logger.logger import event_logger
 
 try:
-    # Retrieve the OPEN_AI_API_KEY from environment variables
-    open_ai_api_key = os.environ.get("OPEN_AI_API_KEY")
+    # Retrieve the OPENAI_API_KEY from environment variables
+    OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
     # Retrieve the SYSTEM_API_KEY from environment variables
     system_api_key = os.environ.get("SYSTEM_API_KEY")
     # Retrieve the AZURE_VAULT_ID from environment variables

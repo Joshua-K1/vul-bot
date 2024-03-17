@@ -1,5 +1,18 @@
+# Application artefacts
 __pycache__
 logs/
+
+# Secrets and environment files
 .secret
 .env
+
+# Byte-compiled / optimized / DLL files
 .DS_Store
+
+# Ignore terraform
+*.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform
+*.tfplan
+*.lock.hcl

@@ -3,16 +3,39 @@ include .env
 .PHONY: all
 
 build-local:
-	pip install -r requirements.txt
+	./buildscripts/build_local.sh
 
 build:
-	docker build -t vul-bot -f Dockerfile .
+	./buildscripts/build_docker.sh
 
 run-local:
-	export $(cat .env | xargs)
-	uvicorn main:app --host 0.0.0.0 --port 8000
+	./buildscripts/run_local.sh
 
 run:
-	export $(cat .env | xargs)
-	docker stop vul-bot || true && docker rm vul-bot || true
-	docker run --name vul-bot --rm -e OPEN_AI_API_KEY=${OPEN_AI_API_KEY} -e SYSTEM_API_KEY=${SYSTEM_API_KEY} -e AZURE_VAULT_ID=${AZURE_VAULT_ID} -p 8000:8000 -v ${PWD}/logs:/app/logs vul-bot 
+	./buildscripts/run_docker.sh
+
+tf-fmt:
+	./buildscripts/fmt_terraform.sh
+
+tf-lint:
+	./buildscripts/lint_terraform.sh
+
+tf-init:
+	$(MAKE) tf-lint
+	./buildscripts/init_terraform.sh
+
+tf-init-local:
+	$(MAKE) tf-lint
+	./buildscripts/init_terraform.sh -l true
+
+tf-plan:
+	./buildscripts/plan_terraform.sh
+
+tf-plan-local:
+	./buildscripts/plan_terraform.sh -l true
+
+tf-apply:
+	./buildscripts/apply_terraform.sh
+
+tf-destroy:
+	./buildscripts/destroy_terraform.sh
