@@ -7,7 +7,7 @@ def call_openai(system_prompt, user_prompt, query):
   event_logger.info("Loading environment variables")
   load_dotenv()
   client = OpenAI(
-    api_key = config.open_ai_api_key
+    api_key = config.OPENAI_API_KEY
   )
  
   # Attempt call to OpenAI
