@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from uuid import uuid1, UUID
 from fastapi import FastAPI, HTTPException
 from pydantic.fields import Field
@@ -7,13 +8,22 @@ from helpers.open_ai import call_openai
 from middleware.auth import authenticate
 from pydantic import BaseModel
 
+from middleware.key_store import build_local_key_store
+
+
 # Define pydantic model and include unique id per request
 class OpenQuery(BaseModel):
     prompt: str
     request_id: UUID = Field(default_factory=uuid1)
 
 
-app = FastAPI()
+@asynccontextmanager
+async def app_lifespan(app: FastAPI):
+    event_logger.info("Lifespan")
+    build_local_key_store()
+    yield
+
+app = FastAPI(lifespan=app_lifespan)
 
 # Apply the authentication middleware to the app
 app.middleware('http')(authenticate)
