@@ -47,3 +47,17 @@ variable "allowed_inbound_ips" {
   default   = [""]
   sensitive = true
 }
+
+variable "tenant_id" {
+  type        = string
+  description = "The ID of the Azure tenant"
+  sensitive   = true
+}
+
+variable "sp_id" {
+  type        = string
+  description = "The ID of the Service Principle for key vault management"
+  sensitive   = true
+}
+
+

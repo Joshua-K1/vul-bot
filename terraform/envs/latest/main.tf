@@ -41,3 +41,18 @@ module "app_service" {
 
   tags = local.tags
 }
+
+module "key_vault" {
+  source                   = "../../modules/key_vault"
+  environment              = var.environment
+  project                  = "vul-bot"
+  purge_protection_enabled = true
+  soft_delete_retention    = 7
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  tenant_id                = var.tenant_id
+  sp_id                    = var.sp_id
+  sku_name                 = "Standard"
+
+  tags = local.tags
+}

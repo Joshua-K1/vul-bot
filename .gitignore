@@ -5,6 +5,7 @@ logs/
 # Secrets and environment files
 .secret
 .env
+.store
 
 # Byte-compiled / optimized / DLL files
 .DS_Store
