@@ -1,9 +1,9 @@
 terraform {
 
   # The backend configuration defines the Terraform State files need to be stored.
-//  backend "azurerm" {
- //   key = "stable-backend.tfstate"
-//  }
+  backend "azurerm" {
+    key = "stable-backend.tfstate"
+  }
 
   required_version = ">= 0.14"
 

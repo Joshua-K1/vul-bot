@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from uuid import uuid1, UUID
 from fastapi import FastAPI, HTTPException
 from pydantic.fields import Field
+from starlette.types import Lifespan
 from logger.logger import event_logger, request_logger
 from helpers.prompts import read_prompts
 from helpers.open_ai import call_openai

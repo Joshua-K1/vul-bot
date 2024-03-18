@@ -41,7 +41,7 @@ def retieve_secret_local(local_secret_name: str):
     event_logger.info("Retrieving secret from local store.")
     con = sqlite3.connect(".store/store.db")
     cur = con.cursor()
-    cur.execute("value from store where name = ?", (local_secret_name,))
+    cur.execute("select value from store where name = ?", (local_secret_name,))
     result = cur.fetchone()
     cur.close()
     con.close()
